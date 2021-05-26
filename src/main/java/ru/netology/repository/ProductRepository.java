@@ -31,13 +31,4 @@ public class ProductRepository {
     public Product[] findAll() {
         return items;
     }
-
-    public Product findById(int id) {
-        for (Product item : items) {
-            if (item.getId() == id) {
-                return item;
-            }
-        }
-        return null;
-    }
 }
