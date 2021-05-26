@@ -33,13 +33,14 @@ public class ProductManager {
         }
         return result;
     }
-    public boolean matches(Product product, String search){
-        if (product instanceof Book){
+
+    public boolean matches(Product product, String search) {
+        if (product instanceof Book) {
             Book book = (Book) product;
-            if (book.getName().equalsIgnoreCase(search)){
+            if (book.getName().equalsIgnoreCase(search)) {
                 return true;
             }
-            if (book.getAuthor().equalsIgnoreCase(search)){
+            if (book.getAuthor().equalsIgnoreCase(search)) {
                 return true;
             }
             return false;
@@ -52,8 +53,8 @@ public class ProductManager {
                 return true;
             }
             return false;
-        }else {
-            if (product.getName().equalsIgnoreCase(search)){
+        } else {
+            if (product.getName().equalsIgnoreCase(search)) {
                 return true;
             }
             return false;
