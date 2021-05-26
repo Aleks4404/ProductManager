@@ -28,23 +28,13 @@ public class ProductManagerTest {
 
     @BeforeEach
     public void setup() {
-        manager.add(first);
-        manager.add(second);
-        manager.add(third);
-        manager.add(fourth);
-        manager.add(sixth);
-        manager.add(seventh);
+        repository.save(first);
+        repository.save(second);
+        repository.save(third);
+        repository.save(fourth);
+        repository.save(sixth);
+        repository.save(seventh);
 
-    }
-
-    //А где тест на то что должно находиться несколько элементов?
-
-
-    @Test // Тест поиска с одинаковыми данными
-    public void shouldUseEquals() {
-        Product third = new Book(003, "Тестирование черного ящика", 1000, "Борис Бейзер");
-        Product fourth = new Book(003, "Тестирование черного ящика", 1000, "Борис Бейзер");
-        assertEquals(third, fourth);
     }
 
     @Test // Тест поиск всего списка
@@ -71,7 +61,7 @@ public class ProductManagerTest {
     @Test
         //Тест поиска книги по автору которой нет в списке
     void shouldFindAuthoNotExistBook() {
-        manager.add(first);
+        repository.save(first);
         Product[] actual = manager.searchBy("Пушкин");
         Product[] expected = new Product[]{};
         assertArrayEquals(expected, actual);
@@ -80,7 +70,7 @@ public class ProductManagerTest {
     @Test
         //Тест поиска книги по названию которой нет в списке
     void shouldFindNameNotExistBook() {
-        manager.add(second);
+        repository.save(second);
         Product[] actual = manager.searchBy("Война и Мир");
         Product[] expected = new Product[]{};
         assertArrayEquals(expected, actual);
@@ -103,7 +93,7 @@ public class ProductManagerTest {
     @Test
         //Тест поиска смартфона по стране производителя которого нет в списке
     void shouldFindМanufacturerNotExistSmartphone() {
-        manager.add(sixth);
+        repository.save(sixth);
         Product[] actual = manager.searchBy("Индия");
         Product[] expected = new Product[]{};
         assertArrayEquals(expected, actual);
@@ -112,7 +102,7 @@ public class ProductManagerTest {
     @Test
         //Тест поиска смартфона по названию модели которой нет в списке
     void shouldFindNameNotExistSmartphone() {
-        manager.add(sixth);
+        repository.save(sixth);
         Product[] actual = manager.searchBy("Apple");
         Product[] expected = new Product[]{};
         assertArrayEquals(expected, actual);

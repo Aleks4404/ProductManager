@@ -15,8 +15,9 @@ public class Smartphone extends Product {
         return manufacturer;
     }
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
+    @Override
+    public boolean matches(String searchBy) {
+        return super.matches(searchBy) || getManufacturer().equalsIgnoreCase(searchBy);
     }
 
     @Override
@@ -38,16 +39,5 @@ public class Smartphone extends Product {
         return "Smartphone{" +
                 "maker='" + manufacturer +
                 '}';
-    }
-
-    @Override
-    public boolean matches(String search) {
-        if (super.matches(search)) {
-            return true;
-        }
-        if (getManufacturer().equalsIgnoreCase(search)) {
-            return true;
-        }
-        return false;
     }
 }

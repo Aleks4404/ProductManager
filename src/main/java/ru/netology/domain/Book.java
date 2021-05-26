@@ -15,6 +15,11 @@ public class Book extends Product {
     }
 
     @Override
+    public boolean matches(String searchBy) {
+        return super.matches(searchBy) || getAuthor().equalsIgnoreCase(searchBy);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -33,16 +38,5 @@ public class Book extends Product {
         return "Book{" +
                 "author='" + author +
                 '}';
-    }
-
-    @Override
-    public boolean matches(String search) {
-        if (super.matches(search)) {
-            return true;
-        }
-        if (getAuthor().equalsIgnoreCase(search)) {
-            return true;
-        }
-        return false;
     }
 }
