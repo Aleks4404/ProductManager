@@ -10,10 +10,6 @@ public class Book extends Product {
         this.author = author;
     }
 
-    public Book() {
-        super();
-    }
-
     public String getAuthor() {
         return author;
     }

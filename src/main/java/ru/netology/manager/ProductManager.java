@@ -16,10 +16,6 @@ public class ProductManager {
         this.repository.save(product);
     }
 
-    public Product[] findAll() {
-        return repository.findAll();
-    }
-
     public Product[] searchBy(String text) {
         Product[] products = this.repository.findAll();
 
@@ -65,4 +61,5 @@ public class ProductManager {
 
         }
     }
+
 }
