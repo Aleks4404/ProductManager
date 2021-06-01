@@ -62,4 +62,7 @@ public class ProductManager {
         }
     }
 
+    public Product[] findAll() {
+        return repository.findAll();
+    }
 }

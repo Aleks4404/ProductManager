@@ -19,7 +19,7 @@ public class ProductManagerTest {
     private Book third = new Book(003, "Тестирование черного ящика", 1000, "Борис Бейзер");
     private Book fourth = new Book(003, "Тестирование черного ящика", 1000, "Борис Бейзер");
     private Book fifth = new Book(005, "Автоматизированное тестирование программного обеспечения", 1000, "Элфрид Дастин, Джефф Рэшка, Джон Пол");
-    private Smartphone sixth = new Smartphone(006, "Samsung", 5000, "South Korea");
+    private Smartphone sixth = new Smartphone(006, "Samsung", 5000, "Южная Корея");
     private Smartphone seventh = new Smartphone(007, "Xiaomi", 5000, "Китай");
     private Smartphone eidhth = new Smartphone(00, "Huawei", 5000, "Китай");
     private Smartphone ninth = new Smartphone(00, "Nokia", 5000, "Финляндия");
@@ -32,6 +32,7 @@ public class ProductManagerTest {
         manager.add(second);
         manager.add(third);
         manager.add(fourth);
+        manager.add(fifth);
         manager.add(sixth);
         manager.add(seventh);
 
@@ -39,6 +40,19 @@ public class ProductManagerTest {
 
     //А где тест на то что должно находиться несколько элементов?
 
+    @Test // Тест добавления еще одного элемента
+    public void shouldAddOneMore() {
+        manager.add(eidhth);
+        Product[] expected = new Product[]{first, second, third, fourth, fifth, sixth, seventh, eidhth};
+        Product[] actual = manager.findAll();
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test // Тест использование метода переопределения
+    public void shouldEseOverridedMethod() {
+        Product product = new Book();
+        product.toString();
+    }
 
     @Test // Тест поиска с одинаковыми данными
     public void shouldUseEquals() {
@@ -47,10 +61,10 @@ public class ProductManagerTest {
         assertEquals(third, fourth);
     }
 
-    @Test // Тест поиск всего списка
+    @Test // Тест сохранения всего списка
     void shouldGetAll() {
         Product[] actual = repository.findAll();
-        Product[] expected = new Product[]{first, second, third, fourth,sixth,seventh};
+        Product[] expected = new Product[]{first, second,third, fourth, fifth, sixth, seventh};
         assertArrayEquals(expected, actual);
     }
 
@@ -72,7 +86,7 @@ public class ProductManagerTest {
         //Тест поиска книги по автору которой нет в списке
     void shouldFindAuthoNotExistBook() {
         manager.add(first);
-        Product[] actual = manager.searchBy("Пушкин");
+        Product[] actual = manager.searchBy("Пушкин А.С.");
         Product[] expected = new Product[]{};
         assertArrayEquals(expected, actual);
     }
@@ -81,7 +95,7 @@ public class ProductManagerTest {
         //Тест поиска книги по названию которой нет в списке
     void shouldFindNameNotExistBook() {
         manager.add(second);
-        Product[] actual = manager.searchBy("Война и Мир");
+        Product[] actual = manager.searchBy("Руслан и Людмила");
         Product[] expected = new Product[]{};
         assertArrayEquals(expected, actual);
     }
@@ -96,7 +110,7 @@ public class ProductManagerTest {
     @Test // Тест поиска телефон по стране производителя
     public void shouldFindBySmartphoneTitle() {
         Product[] expected = new Product[]{sixth};
-        Product[] actual = manager.searchBy("South Korea");
+        Product[] actual = manager.searchBy("Южная Корея");
         assertArrayEquals(expected, actual);
     }
 
