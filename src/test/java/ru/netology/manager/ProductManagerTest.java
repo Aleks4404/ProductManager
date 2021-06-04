@@ -26,7 +26,7 @@ public class ProductManagerTest {
     Book fourth = new Book(003, "Тестирование черного ящика", 1000, "Борис Бейзер");
     Book fifth = new Book(005, "Автоматизированное тестирование программного обеспечения", 1000, "Элфрид Дастин, Джефф Рэшка, Джон Пол");
     Smartphone sixth = new Smartphone(006, "Samsung", 5000, "Южная Корея");
-    Smartphone seventh = new Smartphone(007, "Xiaomi", 5000, "Китай");
+    Smartphone seventh = new Smartphone(7, "Xiaomi", 5000, "Китай");
     Smartphone eidhth = new Smartphone(8, "Huawei", 5000, "Китай");
     Smartphone ninth = new Smartphone(9, "Nokia", 5000, "Финляндия");
     Smartphone tenth = new Smartphone(010, "Sony", 5000, "Япония");
@@ -41,24 +41,33 @@ public class ProductManagerTest {
         manager.add(fifth);
         manager.add(sixth);
         manager.add(seventh);
+        manager.add(eidhth);
 
     }
 
     //А где тест на то что должно находиться несколько элементов?
 
     @Test //
-    void shouldSearchForSeveralProducts() {
-        Product[] actual = manager.findAll();
-        Product[] expected = new Product[]{first, second, third, fourth, fifth, sixth, seventh};
+    void shouldSearchForSeveralProductsBook() {
+        Product[] actual= manager.searchBy("Тестирование черного ящика");
+        Product[]expected = new Product[]{third, fourth};
+        assertArrayEquals(actual, expected);
+        System.out.println(Arrays.toString(expected));
+    }
+
+    @Test //
+    void shouldSearchForSeveralProductsSmartphone() {
+        Product[] actual= manager.searchBy("Китай");
+        Product[]expected = new Product[]{seventh, eidhth};
         assertArrayEquals(actual, expected);
         System.out.println(Arrays.toString(expected));
     }
 
     @Test // Тест добавления еще одного элемента
     public void shouldAddOneMore() {
-        manager.add(eidhth);
+        manager.add(ninth);
         Product[] actual = manager.findAll();
-        Product[] expected = new Product[]{first, second, third, fourth, fifth, sixth, seventh, eidhth};
+        Product[] expected = new Product[]{first, second, third, fourth, fifth, sixth, seventh, eidhth, ninth};
         assertArrayEquals(actual, expected);
         System.out.println(Arrays.toString(actual));
     }
@@ -79,7 +88,7 @@ public class ProductManagerTest {
     @Test // Тест сохранения всего списка
     void shouldGetAll() {
         Product[] actual = repository.findAll();
-        Product[] expected = new Product[]{first, second,third, fourth, fifth, sixth, seventh};
+        Product[] expected = new Product[]{first, second,third, fourth, fifth, sixth, seventh, eidhth};
         assertArrayEquals(actual, expected);
         System.out.println(Arrays.toString(actual));
     }
