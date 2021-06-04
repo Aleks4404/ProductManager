@@ -1,29 +1,35 @@
 package ru.netology.manager;
 
+import com.sun.source.doctree.AuthorTree;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.netology.domain.Book;
 import ru.netology.domain.Product;
 import ru.netology.domain.Smartphone;
 import ru.netology.repository.ProductRepository;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ExtendWith(MockitoExtension.class)
 
 public class ProductManagerTest {
-    private ProductRepository repository = new ProductRepository();
-    private ProductManager manager = new ProductManager(repository);
-    private Book first = new Book(001, "Тестирование ПО", 1000, "Святослав Куликов");
-    private Book second = new Book(002, "Tестирование dot com", 1000, "Роман Савин");
-    private Book third = new Book(003, "Тестирование черного ящика", 1000, "Борис Бейзер");
-    private Book fourth = new Book(003, "Тестирование черного ящика", 1000, "Борис Бейзер");
-    private Book fifth = new Book(005, "Автоматизированное тестирование программного обеспечения", 1000, "Элфрид Дастин, Джефф Рэшка, Джон Пол");
-    private Smartphone sixth = new Smartphone(006, "Samsung", 5000, "Южная Корея");
-    private Smartphone seventh = new Smartphone(007, "Xiaomi", 5000, "Китай");
-    private Smartphone eidhth = new Smartphone(00, "Huawei", 5000, "Китай");
-    private Smartphone ninth = new Smartphone(00, "Nokia", 5000, "Финляндия");
-    private Smartphone tenth = new Smartphone(010, "Sony", 5000, "Япония");
+    ProductRepository repository = new ProductRepository();
+    ProductManager manager = new ProductManager(repository);
+    Book first = new Book(001, "Тестирование ПО", 1000, "Святослав Куликов");
+    Book second = new Book(002, "Tестирование dot com", 1000, "Роман Савин");
+    Book third = new Book(003, "Тестирование черного ящика", 1000, "Борис Бейзер");
+    Book fourth = new Book(003, "Тестирование черного ящика", 1000, "Борис Бейзер");
+    Book fifth = new Book(005, "Автоматизированное тестирование программного обеспечения", 1000, "Элфрид Дастин, Джефф Рэшка, Джон Пол");
+    Smartphone sixth = new Smartphone(006, "Samsung", 5000, "Южная Корея");
+    Smartphone seventh = new Smartphone(007, "Xiaomi", 5000, "Китай");
+    Smartphone eidhth = new Smartphone(8, "Huawei", 5000, "Китай");
+    Smartphone ninth = new Smartphone(9, "Nokia", 5000, "Финляндия");
+    Smartphone tenth = new Smartphone(010, "Sony", 5000, "Япония");
 
 
     @BeforeEach
@@ -40,12 +46,21 @@ public class ProductManagerTest {
 
     //А где тест на то что должно находиться несколько элементов?
 
+    @Test //
+    void shouldSearchForSeveralProducts() {
+        Product[] actual = manager.findAll();
+        Product[] expected = new Product[]{first, second, third, fourth, fifth, sixth, seventh};
+        assertArrayEquals(actual, expected);
+        System.out.println(Arrays.toString(expected));
+    }
+
     @Test // Тест добавления еще одного элемента
     public void shouldAddOneMore() {
         manager.add(eidhth);
-        Product[] expected = new Product[]{first, second, third, fourth, fifth, sixth, seventh, eidhth};
         Product[] actual = manager.findAll();
-        assertArrayEquals(expected, actual);
+        Product[] expected = new Product[]{first, second, third, fourth, fifth, sixth, seventh, eidhth};
+        assertArrayEquals(actual, expected);
+        System.out.println(Arrays.toString(actual));
     }
 
     @Test // Тест использование метода переопределения
@@ -65,21 +80,24 @@ public class ProductManagerTest {
     void shouldGetAll() {
         Product[] actual = repository.findAll();
         Product[] expected = new Product[]{first, second,third, fourth, fifth, sixth, seventh};
-        assertArrayEquals(expected, actual);
+        assertArrayEquals(actual, expected);
+        System.out.println(Arrays.toString(actual));
     }
 
     @Test // Тест поиск книги по автору
     public void shouldFindAuthorExistBook() {
         Product[] actual = manager.searchBy("Святослав Куликов");
         Product[] expected = new Product[]{first};
-        assertArrayEquals(expected, actual);
+        assertArrayEquals(actual, expected);
+        System.out.println(Arrays.toString(actual));
     }
 
     @Test // Тест поик книги по названию
     public void shouldFindByBookName() {
-        Product[] expected = new Product[]{second};
         Product[] actual = manager.searchBy("Tестирование dot com");
-        assertArrayEquals(expected, actual);
+        Product[] expected = new Product[]{second};
+        assertArrayEquals(actual, expected);
+        System.out.println(Arrays.toString(actual));
     }
 
     @Test
@@ -88,7 +106,8 @@ public class ProductManagerTest {
         manager.add(first);
         Product[] actual = manager.searchBy("Пушкин А.С.");
         Product[] expected = new Product[]{};
-        assertArrayEquals(expected, actual);
+        assertArrayEquals(actual, expected);
+        System.out.println(Arrays.toString(expected));
     }
 
     @Test
@@ -97,21 +116,24 @@ public class ProductManagerTest {
         manager.add(second);
         Product[] actual = manager.searchBy("Руслан и Людмила");
         Product[] expected = new Product[]{};
-        assertArrayEquals(expected, actual);
+        assertArrayEquals(actual, expected);
+        System.out.println(Arrays.toString(expected));
     }
 
     @Test //Тест поиска телефон по модели
     public void shouldFindBySmartphoneManufacturer() {
-        Product[] expected = new Product[]{sixth};
         Product[] actual = manager.searchBy("Samsung");
-        assertArrayEquals(expected, actual);
+        Product[] expected = new Product[]{sixth};
+        assertArrayEquals(actual, expected);
+        System.out.println(Arrays.toString(expected));
     }
 
     @Test // Тест поиска телефон по стране производителя
     public void shouldFindBySmartphoneTitle() {
-        Product[] expected = new Product[]{sixth};
         Product[] actual = manager.searchBy("Южная Корея");
-        assertArrayEquals(expected, actual);
+        Product[] expected = new Product[]{sixth};
+        assertArrayEquals(actual, expected);
+        System.out.println(Arrays.toString(expected));
     }
 
     @Test
@@ -120,7 +142,8 @@ public class ProductManagerTest {
         manager.add(sixth);
         Product[] actual = manager.searchBy("Индия");
         Product[] expected = new Product[]{};
-        assertArrayEquals(expected, actual);
+        assertArrayEquals(actual, expected);
+        System.out.println(Arrays.toString(expected));
     }
 
     @Test
@@ -129,6 +152,7 @@ public class ProductManagerTest {
         manager.add(sixth);
         Product[] actual = manager.searchBy("Apple");
         Product[] expected = new Product[]{};
-        assertArrayEquals(expected, actual);
+        assertArrayEquals(actual, expected);
+        System.out.println(Arrays.toString(expected));
     }
 }

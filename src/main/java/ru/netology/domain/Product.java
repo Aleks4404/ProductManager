@@ -34,7 +34,7 @@ public class Product {
         this.name = name;
     }
 
-    public int getPrice() {
+    public int getPrice(int actual) {
         return price;
     }
 
@@ -53,23 +53,11 @@ public class Product {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, name, price);
-    }
-
-    @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 '}';
-    }
-
-    public boolean matches(String search) {
-        if (getName().equalsIgnoreCase(search)) {
-            return true;
-        }
-        return false;
     }
 }
